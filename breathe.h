@@ -1,3 +1,9 @@
+/*
+ * breathe.h
+ * Breathing mode for christmas lights.
+ * Written by Quinn Neufeld
+ * Dec. 10 2021
+ */
 
 #ifndef BREATHE_H
 #define BREATHE_H
