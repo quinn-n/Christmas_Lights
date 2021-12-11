@@ -7,63 +7,45 @@
 
 #include <FastLED.h>
 
+#include "snake.h"
+#include "breathe.h"
+
 #define DATA_PIN 2
 #define N_LEDS 300
 #define N_LIT_LEDS 50
-#define UPDATE_DELAY 13
 
-#define N_COLOURS floor(sizeof(COLOURS) / sizeof(CRGB))
-static const CRGB COLOURS[2] = {
-  CRGB(255, 0, 0),
-  CRGB(0, 255, 0)
-};
+#define MODE_SNAKE 1
+#define MODE_BREATHE 2
 
 CRGB leds[N_LEDS];
 
-int cur_led = 0;
-
-int wrap(int, int, int);
-void update_leds();
-CRGB pick_colour();
+void clear_leds();
 
 void setup() {
-  randomSeed(analogRead(A0));
-  
-  FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, N_LEDS);
+    randomSeed(analogRead(A0));
 
-  for (int i = cur_led; i < cur_led + N_LIT_LEDS; i++) {
-    leds[i] = pick_colour();
-  }
+    FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, N_LEDS);
 }
 
 void loop() {
-  unsigned long s_time = millis();
-  
-  update_leds();
-  FastLED.show();
-  cur_led = wrap(cur_led + 1, 0, N_LEDS);
-  
-  unsigned long e_time = millis();
-  if ((e_time - s_time) < UPDATE_DELAY)
-    delay(UPDATE_DELAY - (e_time - s_time));
+    int mode = random(1, 3);
+    if (mode == MODE_SNAKE) {
+        Snake* s = new Snake(leds, N_LEDS, random(1, 100), random(15, 50), random(1, 5));
+        s->snake();
+        delete s;
+    }
+    else if (mode == MODE_BREATHE) {
+        Breathe* b = new Breathe(leds, N_LEDS, random(5000, 20000), random(2, 5));
+        b->breathe();
+        delete b;
+    }
+    clear_leds();
 }
 
-// Updates the chain of lit LEDs
-void update_leds() {
-  //Clear last LED
-  leds[wrap(cur_led, 0, N_LEDS)] = CRGB(0, 0, 0);
-  //Set LED at the end of the chain
-  leds[wrap(cur_led + N_LIT_LEDS, 0, N_LEDS)] = pick_colour();
-}
-
-// Returns a random colour from COLOURS
-CRGB pick_colour() {
-  return COLOURS[random(N_COLOURS)];
-}
-
-/*
- * Wraps a number around between s and e
- */
-int wrap(int n, int s, int e) {
-  return n % (e - s);
+// Cleanup LEDs
+void clear_leds() {
+    for (int i = 0; i < N_LEDS; i++) {
+        leds[i] = CRGB(0, 0, 0);
+    }
+    FastLED.show();
 }
