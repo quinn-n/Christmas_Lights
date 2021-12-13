@@ -30,7 +30,7 @@ void setup() {
 void loop() {
     int mode = random(1, 3);
     if (mode == MODE_SNAKE) {
-        Snake* s = new Snake(leds, N_LEDS, random(1, 100), random(15, 50), random(1, 5));
+        Snake* s = new Snake(leds, N_LEDS, random(1, 100), random(1, 3), random(15, 50), random(1, 5));
         s->snake();
         delete s;
     }

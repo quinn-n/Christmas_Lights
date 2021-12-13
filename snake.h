@@ -11,6 +11,9 @@
 
 #include <FastLED.h>
 
+#define SNAKE_FOR 1
+#define SNAKE_REV 2
+
 #define SNAKE_N_COLOURS floor(sizeof(SNAKE_COLOURS) / sizeof(CRGB))
 static const CRGB SNAKE_COLOURS[] = {
     CRGB(255, 0, 0),
@@ -19,18 +22,28 @@ static const CRGB SNAKE_COLOURS[] = {
 
 class Snake {
     public:
-    Snake(CRGB* leds, int n_leds, int n_lit_leds, int tick_delay, int times) {
+    Snake(CRGB* leds, int n_leds, int n_lit_leds, int direction, int tick_delay, int times) {
         this->leds = leds;
         this->n_leds = n_leds;
         this->n_lit_leds = n_lit_leds;
+        this->direction = direction;
         this->tick_delay = tick_delay;
         this->times = times;
     }
     void snake() {
-        for (int i = 0; i < n_lit_leds; i++) {
-            leds[i] = pick_colour();
-            FastLED.show();
-            tick();
+        if (direction == SNAKE_FOR) {
+            for (int i = 0; i < n_lit_leds; i++) {
+                leds[i] = pick_colour();
+                FastLED.show();
+                tick();
+            }
+        }
+        else if (direction == SNAKE_REV) {
+            for (int i = n_leds - 1; i > n_leds - n_lit_leds - 1; i--) {
+                leds[i] = pick_colour();
+                FastLED.show();
+                tick();
+            }
         }
 
         for (int i = 0; i < times; i++) {
@@ -52,6 +65,7 @@ class Snake {
     CRGB* leds;
     int n_leds;
     int n_lit_leds;
+    int direction;
     int tick_delay;
     int times;
 
@@ -73,25 +87,56 @@ class Snake {
     // Updates the chain of lit LEDs
     void update_leds(int cur_led) {
         //Clear last LED
-        leds[wrap(cur_led, 0, n_leds)] = CRGB(0, 0, 0);
+        if (direction == SNAKE_FOR) {
+            leds[wrap(cur_led, 0, n_leds)] = CRGB(0, 0, 0);
+        }
+        else if (direction == SNAKE_REV) {
+            leds[wrap(n_leds - cur_led - 1, 0, n_leds)] = CRGB(0, 0, 0);
+        }
         //Set LED at the end of the chain
-        leds[wrap(cur_led + n_lit_leds, 0, n_leds)] = pick_colour();
+        if (direction == SNAKE_FOR) {
+            leds[wrap(cur_led + n_lit_leds, 0, n_leds)] = pick_colour();
+        }
+        else if (direction == SNAKE_REV) {
+            leds[wrap(n_leds - cur_led - n_lit_leds - 1, 0, n_leds)] = pick_colour();
+        }
     }
 
     // Clears last LED. Used when the snake is ending
-    void update_last_leds(int led) {
-        leds[wrap(led, 0, n_leds)] = CRGB(0, 0, 0);
+    void update_last_leds(int cur_led) {
+        if (direction == SNAKE_FOR) {
+            leds[wrap(cur_led, 0, n_leds)] = CRGB(0, 0, 0);
+        }
+        else if (direction == SNAKE_REV) {
+            leds[wrap(n_leds - cur_led - 1, 0, n_leds)] = CRGB(0, 0, 0);
+        }
 
         // Only turn on the next led if it hasn't wrapped back around
-        int set_led = wrap(led + n_lit_leds, 0, n_leds);
-        if (set_led > led) {
-            leds[set_led] = pick_colour();
+        if (direction == SNAKE_FOR) {
+            int set_led = wrap(cur_led + n_lit_leds, 0, n_leds);
+            if (set_led > cur_led) {
+                leds[set_led] = pick_colour();
+            }
+        }
+        else if (direction == SNAKE_REV) {
+            int set_led = wrap(n_leds - cur_led - n_lit_leds - 1, 0, n_leds);
+            if (set_led < n_leds - cur_led - 1) {
+                leds[set_led] = pick_colour();
+            }
         }
     }
 
     // Wraps a number around between s and e
     int wrap(int n, int s, int e) {
-        return n % (e - s);
+        if (n > e) {
+            return s + n % (e - s);
+        }
+        else if (n < s) {
+            return e + n % (e - s);
+        }
+        else {
+            return n;
+        }
     }
 };
 
