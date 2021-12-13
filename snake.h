@@ -4,6 +4,7 @@
  * Runs a 'snake' down the length of the wire
  * Written by Quinn Neufeld
  * Dec. 10 2021
+ * Dec. 12 2021 - Added reverse snake
  */
 
 #ifndef SNAKE_H

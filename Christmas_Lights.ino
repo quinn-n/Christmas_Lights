@@ -8,6 +8,7 @@
 #include <FastLED.h>
 
 #include "snake.h"
+#include "overlapped_snake.h"
 #include "breathe.h"
 
 #define DATA_PIN 2
@@ -15,7 +16,8 @@
 #define N_LIT_LEDS 50
 
 #define MODE_SNAKE 1
-#define MODE_BREATHE 2
+#define MODE_OVERLAPPED_SNAKE 2
+#define MODE_BREATHE 3
 
 CRGB leds[N_LEDS];
 
@@ -28,11 +30,16 @@ void setup() {
 }
 
 void loop() {
-    int mode = random(1, 3);
+    int mode = random(1, 4);
     if (mode == MODE_SNAKE) {
         Snake* s = new Snake(leds, N_LEDS, random(1, 100), random(1, 3), random(15, 50), random(1, 5));
         s->snake();
         delete s;
+    }
+    else if (mode == MODE_OVERLAPPED_SNAKE) {
+        OverlappedSnake* os = new OverlappedSnake(leds, N_LEDS, random(1, 3), random(15, 50), random(1, 5));
+        os->overlapped_snake();
+        delete os;
     }
     else if (mode == MODE_BREATHE) {
         Breathe* b = new Breathe(leds, N_LEDS, random(5000, 20000), random(2, 5));
