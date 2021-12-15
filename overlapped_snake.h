@@ -1,3 +1,9 @@
+/*
+ * overlapped_snake.h
+ * Runs two snakes in opposite directions on alternating LEDs
+ * Written by Quinn Neufeld
+ * Dec. 12 2021 (I think?)
+ */
 
 #ifndef OVERLAPPED_SNAKE_H
 #define OVERLAPPED_SNAKE_H

@@ -1,10 +1,16 @@
+/*
+ * overlapped_breathe.h
+ * Alternates between two sets of different coloured leds
+ * Written by Quinn Neufeld
+ * Dec. 13th 2021
+*/
 
 #ifndef OVERLAPPED_BREATHE_H
 #define OVERLAPPED_BREATHE_H
 
 #include <FastLED.h>
 
-#include "breathe.h"
+#include "breathe.h" // Colours
 
 class OverlappedBreathe {
     public:
