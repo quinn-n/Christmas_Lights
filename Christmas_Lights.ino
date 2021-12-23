@@ -35,22 +35,22 @@ void setup() {
 void loop() {
     int mode = random(1, 5);
     if (mode == MODE_SNAKE) {
-        Snake* s = new Snake(leds, N_LEDS, random(1, 100), random(1, 3), random(15, 50), random(1, 5));
+        Snake* s = new Snake(leds, N_LEDS, random(1, 100), random(1, 3), random(15, 50), random(4, 10));
         s->snake();
         delete s;
     }
     else if (mode == MODE_OVERLAPPED_SNAKE) {
-        OverlappedSnake* os = new OverlappedSnake(leds, N_LEDS, random(1, 3), random(15, 50), random(1, 5));
+        OverlappedSnake* os = new OverlappedSnake(leds, N_LEDS, random(1, 3), random(15, 50), random(4, 10));
         os->overlapped_snake();
         delete os;
     }
     else if (mode == MODE_BREATHE) {
-        Breathe* b = new Breathe(leds, N_LEDS, random(5000, 20000), random(2, 5));
+        Breathe* b = new Breathe(leds, N_LEDS, random(5000, 20000), random(3, 8));
         b->breathe();
         delete b;
     }
     else if (mode == MODE_OVERLAPPED_BREATHE) {
-        OverlappedBreathe* ob = new OverlappedBreathe(leds, N_LEDS, random(5000, 20000), random(2, 5));
+        OverlappedBreathe* ob = new OverlappedBreathe(leds, N_LEDS, random(5000, 20000), random(3, 8));
         ob->overlapped_breathe();
         delete ob;
     }
