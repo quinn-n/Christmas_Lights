@@ -1,4 +1,11 @@
 
+/*
+ * double_snake.h
+ * Displays two snakes that pass each other on alternating LEDs
+ * Written by Quinn Neufeld
+ * Dec. 23 2021
+ */
+
 #ifndef DOUBLE_SNAKE_H
 #define DOUBLE_SNAKE_H
 
