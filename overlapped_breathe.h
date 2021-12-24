@@ -43,7 +43,6 @@ class OverlappedBreathe {
                 FastLED.show();
             }
         }
-        Serial.println("Stopping leds");
         stop_leds(primary_colour);
     }
 
