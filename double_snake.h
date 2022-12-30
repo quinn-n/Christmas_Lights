@@ -39,6 +39,12 @@ class DoubleSnake {
                 tick();
             }
         }
+        for (int i = 0; i < n_lit_leds * 2; i += 2) {
+            close_primary_snake(i);
+            close_secondary_snake(i);
+            FastLED.show();
+            tick();
+        }
     }
     private:
     CRGB* leds;
@@ -55,6 +61,15 @@ class DoubleSnake {
     void update_secondary_snake(int led, const CRGB* colour) {
         int sec_led = n_leds - led - 1;
         leds[sec_led] = *colour;
+        leds[wrap(sec_led + n_lit_leds * 2, 0, n_leds)] = CRGB(0, 0, 0);
+    }
+
+    void close_primary_snake(int led) {
+        leds[wrap(led - n_lit_leds * 2, 0, n_leds)] = CRGB(0, 0, 0);
+    }
+
+    void close_secondary_snake(int led) {
+        int sec_led = n_leds - led - 1;
         leds[wrap(sec_led + n_lit_leds * 2, 0, n_leds)] = CRGB(0, 0, 0);
     }
 
