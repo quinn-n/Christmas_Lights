@@ -11,8 +11,9 @@
 #include <FastLED.h>
 
 #include "breathe.h" // Colours
+#include "ledpattern.h"
 
-class OverlappedBreathe {
+class OverlappedBreathe : public LEDPattern {
     public:
     OverlappedBreathe(CRGB* leds, int n_leds, unsigned long breath_time, int times) {
         this->leds = leds;
@@ -21,7 +22,7 @@ class OverlappedBreathe {
         this->times = times;
     }
 
-    void overlapped_breathe() {
+    void run() {
         int primary_colour = random(1, 3);
         start_leds(primary_colour);
         for (int b = 0; b < times; b++) {

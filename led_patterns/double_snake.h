@@ -12,8 +12,9 @@
 #include <FastLED.h>
 
 #include "snake.h"
+#include "ledpattern.h"
 
-class DoubleSnake {
+class DoubleSnake : public LEDPattern {
     public:
     DoubleSnake(CRGB* leds, int n_leds, int n_lit_leds, int tick_delay, int times) {
         this->leds = leds;
@@ -22,7 +23,7 @@ class DoubleSnake {
         this->tick_delay = tick_delay;
         this->times = times;
     }
-    void double_snake() {
+    void run() {
         int primary_col_id = random(SNAKE_N_COLOURS);
         const CRGB* primary_colour = &SNAKE_COLOURS[primary_col_id];
         const CRGB* secondary_colour = NULL;
