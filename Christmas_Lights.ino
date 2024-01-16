@@ -1,4 +1,4 @@
-/*
+/**
  * Christmas_Lights.ino
  * Software for custom christmas lights
  * Written by Quinn Neufeld
@@ -6,6 +6,7 @@
  * Dec. 23 2021 - Added DoubleSnake
  * Dec. 29 2022 - Added RandomOne, Removed unused `N_LIT_LEDS` definition
  * Dec. 30 2022 - Added RandomAll, fixed bug with DoubleSnake ending abruptly, replaced mode #definitions with Mode enum
+ * Jan. 16 2024 - Moved pattern instantiation into `LEDPatternFactory` class, fix memory overflow bug with `Snake`.
  */
 
 #include <FastLED.h>
