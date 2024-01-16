@@ -10,10 +10,12 @@
 
 #include <FastLED.h>
 
+#include "ledpattern.h"
+
 #define BREATHE_RED 1
 #define BREATHE_GREEN 2
 
-class Breathe {
+class Breathe : public LEDPattern {
     public:
     Breathe(CRGB* leds, int n_leds, unsigned long breath_time, int times) {
         this->leds = leds;
@@ -22,7 +24,7 @@ class Breathe {
         this->times = times;
     }
 
-    void breathe() {
+    void run() {
         for (int b = 0; b < times; b++) {
             unsigned long s_time = millis();
             unsigned long e_time = millis() + breath_time;

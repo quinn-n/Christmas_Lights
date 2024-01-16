@@ -10,9 +10,10 @@
 
 #include <FastLED.h>
 
+#include "ledpattern.h"
 #include "snake.h" // Directions
 
-class OverlappedSnake {
+class OverlappedSnake : public LEDPattern {
     public:
     OverlappedSnake(CRGB* leds, int n_leds, int start_direction, int tick_delay, int times) {
         this->leds = leds;
@@ -22,7 +23,7 @@ class OverlappedSnake {
         this->times = times;
     }
 
-    void overlapped_snake() {
+    void run() {
         int colour_id = random(SNAKE_N_COLOURS);
         const CRGB* start_colour = &SNAKE_COLOURS[colour_id];
         int end_colour_id;

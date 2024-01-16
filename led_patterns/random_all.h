@@ -1,4 +1,3 @@
-
 #ifndef RANDOM_ALL_H
 #define RANDOM_ALL_H
 
@@ -6,7 +5,9 @@
 
 #include <ArduinoSTL.h>
 
-class RandomAll {
+#include "ledpattern.h"
+
+class RandomAll : public LEDPattern {
     public:
     RandomAll(CRGB* leds, int n_leds, int ms_between, int times) {
         this->leds = leds;
@@ -15,7 +16,7 @@ class RandomAll {
         this->times = times;
     }
 
-    void random_all() {
+    void run() {
         std::vector<bool> cur_state_leds;
 
         for (int i = 0; i < times * 2; i++) {

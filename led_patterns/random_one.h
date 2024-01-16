@@ -4,8 +4,9 @@
 
 #include <FastLED.h>
 
+#include "ledpattern.h"
 
-class RandomOne {
+class RandomOne : public LEDPattern {
     public:
     RandomOne(CRGB* leds, int n_leds, int ms_between, int times) {
         this->leds = leds;
@@ -14,7 +15,7 @@ class RandomOne {
         this->times = times;
     }
 
-    void random_one() {
+    void run() {
         for (int i = 0; i < this->times; i++) {
             byte red = random(255);
             byte green = random(255);

@@ -12,16 +12,18 @@
 
 #include <FastLED.h>
 
+#include "ledpattern.h"
+
 #define SNAKE_FOR 1
 #define SNAKE_REV 2
 
-#define SNAKE_N_COLOURS floor(sizeof(SNAKE_COLOURS) / sizeof(CRGB))
+#define SNAKE_N_COLOURS (uint8_t) floor(sizeof(SNAKE_COLOURS) / sizeof(CRGB))
 static const CRGB SNAKE_COLOURS[] = {
     CRGB(255, 0, 0),
     CRGB(0, 255, 0)
 };
 
-class Snake {
+class Snake : public LEDPattern {
     public:
     Snake(CRGB* leds, int n_leds, int n_lit_leds, int direction, int tick_delay, int times) {
         this->leds = leds;
@@ -31,7 +33,7 @@ class Snake {
         this->tick_delay = tick_delay;
         this->times = times;
     }
-    void snake() {
+    void run() {
         if (direction == SNAKE_FOR) {
             for (int i = 0; i < n_lit_leds; i++) {
                 leds[i] = pick_colour();
@@ -129,7 +131,7 @@ class Snake {
 
     // Wraps a number around between s and e
     int wrap(int n, int s, int e) {
-        if (n > e) {
+        if (n >= e) {
             return s + n % (e - s);
         }
         else if (n < s) {
