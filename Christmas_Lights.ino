@@ -29,18 +29,8 @@ void setup() {
 
 void loop() {
     Pattern pattern = (Pattern) random(1, 8);
-
     LEDPattern* running_pattern = pattern_factory.build_pattern(pattern);
+
     running_pattern->run();
     delete running_pattern;
-
-    clear_leds();
-}
-
-// Cleanup LEDs
-void clear_leds() {
-    for (int i = 0; i < N_LEDS; i++) {
-        leds[i] = CRGB(0, 0, 0);
-    }
-    FastLED.show();
 }
