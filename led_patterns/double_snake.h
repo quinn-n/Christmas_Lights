@@ -76,7 +76,7 @@ class DoubleSnake : public LEDPattern {
 
     // Wraps a number around between s and e
     int wrap(int n, int s, int e) {
-        if (n > e) {
+        if (n >= e) {
             return s + n % (e - s);
         }
         else if (n < s) {
