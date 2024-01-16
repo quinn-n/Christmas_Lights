@@ -17,7 +17,7 @@
 #define SNAKE_FOR 1
 #define SNAKE_REV 2
 
-#define SNAKE_N_COLOURS floor(sizeof(SNAKE_COLOURS) / sizeof(CRGB))
+#define SNAKE_N_COLOURS (uint8_t) floor(sizeof(SNAKE_COLOURS) / sizeof(CRGB))
 static const CRGB SNAKE_COLOURS[] = {
     CRGB(255, 0, 0),
     CRGB(0, 255, 0)
@@ -131,7 +131,7 @@ class Snake : public LEDPattern {
 
     // Wraps a number around between s and e
     int wrap(int n, int s, int e) {
-        if (n > e) {
+        if (n >= e) {
             return s + n % (e - s);
         }
         else if (n < s) {
