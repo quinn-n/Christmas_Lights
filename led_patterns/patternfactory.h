@@ -31,8 +31,7 @@ class LEDPatternFactory {
         // Build new pattern
         LEDPattern* p = NULL;
         if (pattern == Pattern::Snake) {
-            // p = new Snake(leds, n_leds, random(1, 100), random(1, 3), random(15, 50), random(4, 10));
-            p = new Snake(leds, n_leds, random(1, 100), 1, random(15, 50), random(4, 10));
+            p = new Snake(leds, n_leds, random(1, 100), random(1, 3), random(15, 50), random(4, 10));
         }
         else if (pattern == Pattern::OverlappedSnake) {
             p = new OverlappedSnake(leds, n_leds, random(1, 3), random(15, 50), random(4, 10));
